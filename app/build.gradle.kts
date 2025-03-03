@@ -70,4 +70,6 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.10.0")
 
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+
+    implementation("androidx.paging:paging-runtime:3.3.6")
 }
