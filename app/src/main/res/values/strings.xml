@@ -1,6 +1,3 @@
 <resources>
-    <string name="app_name">TMDB Movie App</string>
-    <string name="movie_poster_content_description">Movie poster</string>
-    <string name="movie_backdrop_content_description">Movie backdrop</string>
-    <string name="movie_info_format">%1$s • %2$d minutes</string>
+    <string name="app_name">JetMovie</string>
 </resources>
