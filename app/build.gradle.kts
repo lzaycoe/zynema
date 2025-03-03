@@ -65,4 +65,6 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
 
     implementation("io.coil-kt:coil:2.7.0")
+
+    implementation("androidx.activity:activity-ktx:1.10.0")
 }
