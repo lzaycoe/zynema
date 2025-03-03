@@ -72,4 +72,6 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
     implementation("androidx.paging:paging-runtime:3.3.6")
+
+    implementation("com.squareup.moshi:moshi-kotlin:1.15.2")
 }
