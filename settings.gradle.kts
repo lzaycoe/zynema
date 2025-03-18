@@ -18,6 +18,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-
-rootProject.name = "Zynema"
+rootProject.name = "Hilt-MVVM-Compose-Movie"
 include(":app")
