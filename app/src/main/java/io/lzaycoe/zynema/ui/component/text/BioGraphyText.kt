@@ -6,9 +6,6 @@ import androidx.compose.runtime.Composable
 import io.lzaycoe.zynema.ui.theme.bioGrapyText
 
 @Composable
-fun BioGraphyText(text:String) {
-    Text(
-        text = text,
-        style = MaterialTheme.typography.bioGrapyText
-    )
+fun BioGraphyText(text: String) {
+  Text(text = text, style = MaterialTheme.typography.bioGrapyText)
 }

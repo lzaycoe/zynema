@@ -7,21 +7,19 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import io.lzaycoe.zynema.data.model.GenreId
 import io.lzaycoe.zynema.data.model.moviedetail.Genre
 import io.lzaycoe.zynema.ui.component.TvSeries
+
 @Composable
 fun OnTheAirTvSeries(
     navController: NavController,
     genres: List<Genre>? = null,
 ) {
-    val onTheAirViewViewModel = hiltViewModel<OnTheAirTvSeriesViewModel>()
-    TvSeries (
-        navController = navController,
-        tvSeries = onTheAirViewViewModel.onTheAirTvSeries.collectAsLazyPagingItems(),
-        genres = genres,
-        selectedName = onTheAirViewViewModel.selectedGenre.value
-    ){
+  val onTheAirViewViewModel = hiltViewModel<OnTheAirTvSeriesViewModel>()
+  TvSeries(
+      navController = navController,
+      tvSeries = onTheAirViewViewModel.onTheAirTvSeries.collectAsLazyPagingItems(),
+      genres = genres,
+      selectedName = onTheAirViewViewModel.selectedGenre.value) {
         onTheAirViewViewModel.filterData.value = GenreId(it?.id.toString())
-        it?.let {
-            onTheAirViewViewModel.selectedGenre.value = it
-        }
-    }
+        it?.let { onTheAirViewViewModel.selectedGenre.value = it }
+      }
 }

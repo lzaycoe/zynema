@@ -13,6 +13,7 @@ import io.lzaycoe.zynema.data.model.tv_series_detail.TvSeriesDetail
 @TypeConverters(MovieTypeConverter::class, TvSeriesTypeConverter::class)
 @Database(version = 1, entities = [MovieDetail::class, TvSeriesDetail::class], exportSchema = false)
 abstract class MovieDatabase : RoomDatabase() {
-    abstract fun getFavoriteMovieDetailDao(): FavoriteMovieDao
-    abstract fun getFavoriteTvSeriesDao(): FavoriteTvSeriesDao
+  abstract fun getFavoriteMovieDetailDao(): FavoriteMovieDao
+
+  abstract fun getFavoriteTvSeriesDao(): FavoriteTvSeriesDao
 }

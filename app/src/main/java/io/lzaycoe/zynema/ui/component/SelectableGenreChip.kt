@@ -31,32 +31,29 @@ fun SelectableGenreChip(
     genre: String,
     onclick: () -> Unit,
 ) {
-    val animateChipBackgroundColor by animateColorAsState(
-        targetValue = if (selected) Purple500 else Purple200,
-        animationSpec = tween(durationMillis = 50, easing = LinearOutSlowInEasing)
-    )
+  val animateChipBackgroundColor by
+      animateColorAsState(
+          targetValue = if (selected) Purple500 else Purple200,
+          animationSpec = tween(durationMillis = 50, easing = LinearOutSlowInEasing))
 
-    Box(
-        modifier = Modifier
-            .padding(end = 8.dp)
-            .cornerRadius(16)
-            .background(animateChipBackgroundColor)
-            .height(32.dp)
-            .widthIn(min = 80.dp)
-            .clickable(
-                interactionSource = remember { MutableInteractionSource() },
-                indication = null,
-                onClick = onclick
-            )
-            .padding(horizontal = 8.dp)
-    ) {
+  Box(
+      modifier =
+          Modifier.padding(end = 8.dp)
+              .cornerRadius(16)
+              .background(animateChipBackgroundColor)
+              .height(32.dp)
+              .widthIn(min = 80.dp)
+              .clickable(
+                  interactionSource = remember { MutableInteractionSource() },
+                  indication = null,
+                  onClick = onclick)
+              .padding(horizontal = 8.dp)) {
         Text(
             text = genre,
             fontSize = 14.sp,
             fontWeight = FontWeight.Light,
             textAlign = TextAlign.Center,
             color = Color.White.copy(alpha = 0.80F),
-            modifier = Modifier.align(Alignment.Center)
-        )
-    }
+            modifier = Modifier.align(Alignment.Center))
+      }
 }

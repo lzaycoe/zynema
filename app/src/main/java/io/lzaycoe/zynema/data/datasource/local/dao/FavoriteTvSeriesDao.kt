@@ -8,15 +8,12 @@ import io.lzaycoe.zynema.data.model.tv_series_detail.TvSeriesDetail
 
 @Dao
 interface FavoriteTvSeriesDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(movieDetail: TvSeriesDetail)
+  @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun insert(movieDetail: TvSeriesDetail)
 
-    @Query("Select * From tvSeriesDetail Where id = :id")
-    suspend fun getTvSeriesDetailById(id: Int): TvSeriesDetail?
+  @Query("Select * From tvSeriesDetail Where id = :id")
+  suspend fun getTvSeriesDetailById(id: Int): TvSeriesDetail?
 
-    @Query("DELETE FROM tvSeriesDetail WHERE id = :id")
-    suspend fun deleteTvSeriesById(id: Int)
+  @Query("DELETE FROM tvSeriesDetail WHERE id = :id") suspend fun deleteTvSeriesById(id: Int)
 
-    @Query("SELECT * FROM tvSeriesDetail")
-    suspend fun getAllTvSeriesDetails(): List<TvSeriesDetail?>
+  @Query("SELECT * FROM tvSeriesDetail") suspend fun getAllTvSeriesDetails(): List<TvSeriesDetail?>
 }
