@@ -11,24 +11,24 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.piashcse.hilt_mvvm_compose_movie"
+        applicationId = "io.lzaycoe.zynema"
         minSdk = 23
         targetSdk = 35
         versionCode = 40
-        versionName = "2.2.0"
+        versionName = "1.0.0"
 
         vectorDrawables {
             useSupportLibrary = true
         }
     }
 
-    namespace = "com.piashcse.hilt_mvvm_compose_movie"
+    namespace = "io.lzaycoe.zynema"
 
     flavorDimensions += "version"
     productFlavors {
         create("develop") {
             dimension = "version"
-            buildConfigField("String", "API_KEY", "\"59cd6896d8432f9c69aed9b86b9c2931\"")
+            buildConfigField("String", "API_KEY", "\"7c8166fbbdb4fd1dc52aebbc6033f93e\"")
         }
     }
 
