@@ -11,9 +11,9 @@ fun Int.hourMinutes(): String {
 
 fun Int.genderInString(): String {
   return when (this) {
-    1 -> "Female"
-    2 -> "Male"
-    else -> ""
+    1 -> "Nữ"
+    2 -> "Name"
+    else -> "N/A"
   }
 }
 
