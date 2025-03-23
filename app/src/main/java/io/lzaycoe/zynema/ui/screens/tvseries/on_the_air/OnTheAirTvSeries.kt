@@ -1,5 +1,5 @@
 package io.lzaycoe.zynema.ui.screens.tvseries.on_the_air
-
+// Quốc Chương
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -13,13 +13,14 @@ fun OnTheAirTvSeries(
     navController: NavController,
     genres: List<Genre>? = null,
 ) {
-  val onTheAirViewViewModel = hiltViewModel<OnTheAirTvSeriesViewModel>()
-  TvSeries(
-      navController = navController,
-      tvSeries = onTheAirViewViewModel.onTheAirTvSeries.collectAsLazyPagingItems(),
-      genres = genres,
-      selectedName = onTheAirViewViewModel.selectedGenre.value) {
+    val onTheAirViewViewModel = hiltViewModel<OnTheAirTvSeriesViewModel>()
+    TvSeries(
+        navController = navController,
+        tvSeries = onTheAirViewViewModel.onTheAirTvSeries.collectAsLazyPagingItems(),
+        genres = genres,
+        selectedName = onTheAirViewViewModel.selectedGenre.value
+    ) {
         onTheAirViewViewModel.filterData.value = GenreId(it?.id.toString())
         it?.let { onTheAirViewViewModel.selectedGenre.value = it }
-      }
+    }
 }

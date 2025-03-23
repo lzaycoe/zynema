@@ -1,5 +1,5 @@
 package io.lzaycoe.zynema.ui.screens.movies.toprated
-
+// Trọng Nghĩa
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -13,13 +13,14 @@ fun TopRatedMovie(
     navController: NavController,
     genres: List<Genre>? = null,
 ) {
-  val topRatedViewModel = hiltViewModel<TopRatedMovieViewModel>()
-  Movies(
-      navController = navController,
-      moviesItems = topRatedViewModel.topRatedMovies.collectAsLazyPagingItems(),
-      genres = genres,
-      selectedName = topRatedViewModel.selectedGenre.value) {
+    val topRatedViewModel = hiltViewModel<TopRatedMovieViewModel>()
+    Movies(
+        navController = navController,
+        moviesItems = topRatedViewModel.topRatedMovies.collectAsLazyPagingItems(),
+        genres = genres,
+        selectedName = topRatedViewModel.selectedGenre.value
+    ) {
         topRatedViewModel.filterData.value = GenreId(it?.id.toString())
         it?.let { topRatedViewModel.selectedGenre.value = it }
-      }
+    }
 }

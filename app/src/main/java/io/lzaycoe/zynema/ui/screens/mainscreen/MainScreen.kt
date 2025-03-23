@@ -1,5 +1,5 @@
 package io.lzaycoe.zynema.ui.screens.mainscreen
-
+// Mạnh Hùng
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -58,160 +58,181 @@ import io.lzaycoe.zynema.utils.networkconnection.connectivityState
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {
-  val mainViewModel = hiltViewModel<MainViewModel>()
-  val navController = rememberNavController()
-  val isAppBarVisible = remember { mutableStateOf(true) }
-  val connection by connectivityState()
-  val isConnected = connection === ConnectionState.Available
-  val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
-  val isFavoriteActive = remember { mutableStateOf(false) }
-  val pagerState = rememberPagerState { 3 }
+    val mainViewModel = hiltViewModel<MainViewModel>()
+    val navController = rememberNavController()
+    val isAppBarVisible = remember { mutableStateOf(true) }
+    val connection by connectivityState()
+    val isConnected = connection === ConnectionState.Available
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
+    val isFavoriteActive = remember { mutableStateOf(false) }
+    val pagerState = rememberPagerState { 3 }
 
-  // Observe the UI state from the ViewModel
-  val uiState by mainViewModel.uiState.collectAsState()
+    // Observe the UI state from the ViewModel
+    val uiState by mainViewModel.uiState.collectAsState()
 
-  LaunchedEffect(Unit) { mainViewModel.loadGenres() }
+    LaunchedEffect(Unit) { mainViewModel.loadGenres() }
 
-  Scaffold(
-      topBar = {
-        if (!isAppBarVisible.value) {
-          SearchBar(isAppBarVisible, mainViewModel, pagerState.currentPage)
-        } else
-            CenterAlignedTopAppBar(
-                colors =
-                    TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer,
-                        titleContentColor = MaterialTheme.colorScheme.primary,
-                    ),
-                title = {
-                  Text(
-                      text = navigationTitle(navController),
-                      maxLines = 1,
-                      overflow = TextOverflow.Ellipsis,
-                      color = Color.White)
-                },
-                navigationIcon = {
-                  when (currentRoute(navController)) {
-                    Screen.MovieDetail.route,
-                    Screen.ArtistDetail.route,
-                    Screen.TvSeriesDetail.route,
-                    Screen.FavoriteMovie.route,
-                    Screen.FavoriteTvSeries.route -> {
-                      val activeScreen = currentRoute(navController)
-                      IconButton(
-                          onClick = {
-                            if (isFavoriteActive.value &&
-                                (activeScreen == Screen.FavoriteMovie.route ||
-                                    activeScreen == Screen.FavoriteTvSeries.route)) {
-                              val activeMovieTab =
-                                  if (pagerState.currentPage == ACTIVE_MOVIE_TAB)
-                                      Screen.NowPlaying.route
-                                  else Screen.AiringTodayTvSeries.route
-                              navController.navigate(activeMovieTab) {
-                                popUpTo(navController.graph.startDestinationId) { inclusive = true }
-                              }
-                              isFavoriteActive.value = false
-                            } else {
-                              navController.popBackStack()
+    Scaffold(
+        topBar = {
+            if (!isAppBarVisible.value) {
+                SearchBar(isAppBarVisible, mainViewModel, pagerState.currentPage)
+            } else
+                CenterAlignedTopAppBar(
+                    colors =
+                        TopAppBarDefaults.topAppBarColors(
+                            containerColor = MaterialTheme.colorScheme.primaryContainer,
+                            titleContentColor = MaterialTheme.colorScheme.primary,
+                        ),
+                    title = {
+                        Text(
+                            text = navigationTitle(navController),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            color = Color.White
+                        )
+                    },
+                    navigationIcon = {
+                        when (currentRoute(navController)) {
+                            Screen.MovieDetail.route,
+                            Screen.ArtistDetail.route,
+                            Screen.TvSeriesDetail.route,
+                            Screen.FavoriteMovie.route,
+                            Screen.FavoriteTvSeries.route -> {
+                                val activeScreen = currentRoute(navController)
+                                IconButton(
+                                    onClick = {
+                                        if (isFavoriteActive.value &&
+                                            (activeScreen == Screen.FavoriteMovie.route ||
+                                                    activeScreen == Screen.FavoriteTvSeries.route)
+                                        ) {
+                                            val activeMovieTab =
+                                                if (pagerState.currentPage == ACTIVE_MOVIE_TAB)
+                                                    Screen.NowPlaying.route
+                                                else Screen.AiringTodayTvSeries.route
+                                            navController.navigate(activeMovieTab) {
+                                                popUpTo(navController.graph.startDestinationId) {
+                                                    inclusive = true
+                                                }
+                                            }
+                                            isFavoriteActive.value = false
+                                        } else {
+                                            navController.popBackStack()
+                                        }
+                                    }) {
+                                    Icon(
+                                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                        contentDescription = "back arrow",
+                                        tint = Color.White
+                                    )
+                                }
                             }
-                          }) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = "back arrow",
-                                tint = Color.White)
-                          }
-                    }
-                  }
-                },
-                scrollBehavior = scrollBehavior,
-                actions = {
-                  IconButton(
-                      onClick = {
-                        if (!isFavoriteActive.value)
-                            navController.navigate(Screen.FavoriteMovie.route)
-                        isFavoriteActive.value = true
-                      }) {
-                        if (currentRoute(navController) !in
-                            listOf(
-                                Screen.FavoriteMovie.route,
-                                Screen.FavoriteTvSeries.route,
-                                Screen.MovieDetail.route,
-                                Screen.TvSeriesDetail.route,
-                                Screen.ArtistDetail.route)) {
-                          Icon(
-                              imageVector = Icons.Filled.Favorite,
-                              contentDescription = "favorite",
-                              tint = Color.Gray)
                         }
-                      }
-                })
-      },
-      floatingActionButton = {
-        if (currentRoute(navController) !in
-            listOf(
-                Screen.FavoriteMovie.route,
-                Screen.FavoriteTvSeries.route,
-                Screen.MovieDetail.route,
-                Screen.TvSeriesDetail.route,
-                Screen.ArtistDetail.route)) {
-          FloatingActionButton(
-              modifier = Modifier.cornerRadius(30),
-              containerColor = FloatingActionBackground,
-              onClick = { isAppBarVisible.value = false },
-          ) {
-            Icon(Icons.Filled.Search, "", tint = Color.White)
-          }
-        }
-      },
-      bottomBar = {
-        if (currentRoute(navController) in
-            listOf(
-                Screen.NowPlaying.route,
-                Screen.Popular.route,
-                Screen.TopRated.route,
-                Screen.Upcoming.route,
-                Screen.AiringTodayTvSeries.route,
-                Screen.OnTheAirTvSeriesNav.route,
-                Screen.PopularTvSeries.route,
-                Screen.TopRatedTvSeries.route,
-                Screen.PopularCelebrities.route,
-                Screen.TrendingCelebrities.route,
-            )) {
-          BottomNavigationUI(navController, pagerState)
-        }
-      },
-      snackbarHost = {
-        if (!isConnected) {
-          Snackbar(action = {}, modifier = Modifier.padding(8.dp)) {
-            Text(text = stringResource(R.string.there_is_no_internet))
-          }
-        }
-      }) { padding ->
-        Box(Modifier.padding(padding)) {
-          MainView(
-              navController = navController,
-              pagerState = pagerState,
-              genres = uiState.genres?.genres,
-              isFavorite = isFavoriteActive.value)
-
-          CircularIndeterminateProgressBar(isDisplayed = uiState.isLoading, 0.1f)
-
-          if (!isAppBarVisible.value) {
-            when (pagerState.currentPage) {
-              ACTIVE_MOVIE_TAB -> {
-                SearchUI(navController, uiState.movieSearchResults, pagerState.currentPage) {
-                  isAppBarVisible.value = true
+                    },
+                    scrollBehavior = scrollBehavior,
+                    actions = {
+                        IconButton(
+                            onClick = {
+                                if (!isFavoriteActive.value)
+                                    navController.navigate(Screen.FavoriteMovie.route)
+                                isFavoriteActive.value = true
+                            }) {
+                            if (currentRoute(navController) !in
+                                listOf(
+                                    Screen.FavoriteMovie.route,
+                                    Screen.FavoriteTvSeries.route,
+                                    Screen.MovieDetail.route,
+                                    Screen.TvSeriesDetail.route,
+                                    Screen.ArtistDetail.route
+                                )
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Filled.Favorite,
+                                    contentDescription = "favorite",
+                                    tint = Color.Gray
+                                )
+                            }
+                        }
+                    })
+        },
+        floatingActionButton = {
+            if (currentRoute(navController) !in
+                listOf(
+                    Screen.FavoriteMovie.route,
+                    Screen.FavoriteTvSeries.route,
+                    Screen.MovieDetail.route,
+                    Screen.TvSeriesDetail.route,
+                    Screen.ArtistDetail.route
+                )
+            ) {
+                FloatingActionButton(
+                    modifier = Modifier.cornerRadius(30),
+                    containerColor = FloatingActionBackground,
+                    onClick = { isAppBarVisible.value = false },
+                ) {
+                    Icon(Icons.Filled.Search, "", tint = Color.White)
                 }
-              }
-              ACTIVE_TV_SERIES_TAB -> {
-                SearchUI(navController, uiState.tvSeriesSearchResults, pagerState.currentPage) {
-                  isAppBarVisible.value = true
-                }
-              }
             }
-          }
+        },
+        bottomBar = {
+            if (currentRoute(navController) in
+                listOf(
+                    Screen.NowPlaying.route,
+                    Screen.Popular.route,
+                    Screen.TopRated.route,
+                    Screen.Upcoming.route,
+                    Screen.AiringTodayTvSeries.route,
+                    Screen.OnTheAirTvSeriesNav.route,
+                    Screen.PopularTvSeries.route,
+                    Screen.TopRatedTvSeries.route,
+                    Screen.PopularCelebrities.route,
+                    Screen.TrendingCelebrities.route,
+                )
+            ) {
+                BottomNavigationUI(navController, pagerState)
+            }
+        },
+        snackbarHost = {
+            if (!isConnected) {
+                Snackbar(action = {}, modifier = Modifier.padding(8.dp)) {
+                    Text(text = stringResource(R.string.there_is_no_internet))
+                }
+            }
+        }) { padding ->
+        Box(Modifier.padding(padding)) {
+            MainView(
+                navController = navController,
+                pagerState = pagerState,
+                genres = uiState.genres?.genres,
+                isFavorite = isFavoriteActive.value
+            )
+
+            CircularIndeterminateProgressBar(isDisplayed = uiState.isLoading, 0.1f)
+
+            if (!isAppBarVisible.value) {
+                when (pagerState.currentPage) {
+                    ACTIVE_MOVIE_TAB -> {
+                        SearchUI(
+                            navController,
+                            uiState.movieSearchResults,
+                            pagerState.currentPage
+                        ) {
+                            isAppBarVisible.value = true
+                        }
+                    }
+
+                    ACTIVE_TV_SERIES_TAB -> {
+                        SearchUI(
+                            navController,
+                            uiState.tvSeriesSearchResults,
+                            pagerState.currentPage
+                        ) {
+                            isAppBarVisible.value = true
+                        }
+                    }
+                }
+            }
         }
-      }
+    }
 }
 
 @Composable
@@ -221,18 +242,20 @@ fun MainView(
     genres: List<Genre>?,
     isFavorite: Boolean,
 ) {
-  Column {
-    if (currentRoute(navController) !in
-        listOf(Screen.MovieDetail.route, Screen.TvSeriesDetail.route, Screen.ArtistDetail.route)) {
-      if (!isFavorite) {
-        TabView(navController, pagerState)
-      } else {
-        FavoriteTabView(navController)
-      }
-    }
-    HorizontalPager(
-        state = pagerState, modifier = Modifier.fillMaxSize(), userScrollEnabled = false) {
-          Navigation(navController, genres)
+    Column {
+        if (currentRoute(navController) !in
+            listOf(Screen.MovieDetail.route, Screen.TvSeriesDetail.route, Screen.ArtistDetail.route)
+        ) {
+            if (!isFavorite) {
+                TabView(navController, pagerState)
+            } else {
+                FavoriteTabView(navController)
+            }
         }
-  }
+        HorizontalPager(
+            state = pagerState, modifier = Modifier.fillMaxSize(), userScrollEnabled = false
+        ) {
+            Navigation(navController, genres)
+        }
+    }
 }

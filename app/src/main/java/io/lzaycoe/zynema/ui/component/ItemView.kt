@@ -29,25 +29,32 @@ fun <T> ItemView(
     itemImageUrlExtractor: (T) -> String,
     itemDetailRoute: String
 ) {
-  Column(modifier = Modifier.padding(5.dp)) {
-    CoilImage(
-        modifier =
-            Modifier.size(250.dp).cornerRadius(10).clickable {
-              navController.navigate("$itemDetailRoute/${itemIdExtractor(item)}")
-            },
-        imageModel = { ApiURL.IMAGE_URL + itemImageUrlExtractor(item) },
-        imageOptions =
-            ImageOptions(
-                contentScale = ContentScale.Crop,
-                alignment = Alignment.Center,
-                contentDescription = "Item"),
-        component =
-            rememberImageComponent {
-              +CircularRevealPlugin(duration = 800)
-              +ShimmerPlugin(
-                  shimmer =
-                      Shimmer.Flash(
-                          baseColor = SecondaryFontColor, highlightColor = DefaultBackgroundColor))
-            })
-  }
+    Column(modifier = Modifier.padding(5.dp)) {
+        CoilImage(
+            modifier =
+                Modifier
+                    .size(250.dp)
+                    .cornerRadius(10)
+                    .clickable {
+                        navController.navigate("$itemDetailRoute/${itemIdExtractor(item)}")
+                    },
+            imageModel = { ApiURL.IMAGE_URL + itemImageUrlExtractor(item) },
+            imageOptions =
+                ImageOptions(
+                    contentScale = ContentScale.Crop,
+                    alignment = Alignment.Center,
+                    contentDescription = "Item"
+                ),
+            component =
+                rememberImageComponent {
+                    +CircularRevealPlugin(duration = 800)
+                    +ShimmerPlugin(
+                        shimmer =
+                            Shimmer.Flash(
+                                baseColor = SecondaryFontColor,
+                                highlightColor = DefaultBackgroundColor
+                            )
+                    )
+                })
+    }
 }

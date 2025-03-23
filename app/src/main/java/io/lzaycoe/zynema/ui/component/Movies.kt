@@ -34,25 +34,25 @@ fun Movies(
     selectedName: Genre?,
     onClickGenre: (Genre?) -> Unit,
 ) {
-  val activity = LocalActivity.current
-  val progressBar = remember { mutableStateOf(false) }
-  val openDialog = remember { mutableStateOf(false) }
+    val activity = LocalActivity.current
+    val progressBar = remember { mutableStateOf(false) }
+    val openDialog = remember { mutableStateOf(false) }
 
-  BackHandler(enabled = currentRoute(navController) == Screen.NowPlaying.route) {
-    openDialog.value = true
-  }
-
-  Column(modifier = Modifier.background(DefaultBackgroundColor)) {
-    genres?.let { DisplayGenres(it, selectedName, onClickGenre) }
-    CircularIndeterminateProgressBar(isDisplayed = progressBar.value, 0.4f)
-    DisplayMovies(moviesItems, navController, genres)
-
-    if (openDialog.value) {
-      ShowExitDialog(activity, openDialog)
+    BackHandler(enabled = currentRoute(navController) == Screen.NowPlaying.route) {
+        openDialog.value = true
     }
-  }
 
-  moviesItems.pagingLoadingState { progressBar.value = it }
+    Column(modifier = Modifier.background(DefaultBackgroundColor)) {
+        genres?.let { DisplayGenres(it, selectedName, onClickGenre) }
+        CircularIndeterminateProgressBar(isDisplayed = progressBar.value, 0.4f)
+        DisplayMovies(moviesItems, navController, genres)
+
+        if (openDialog.value) {
+            ShowExitDialog(activity, openDialog)
+        }
+    }
+
+    moviesItems.pagingLoadingState { progressBar.value = it }
 }
 
 @Composable
@@ -61,14 +61,16 @@ fun DisplayGenres(
     selectedName: Genre?,
     onClick: (Genre?) -> Unit,
 ) {
-  LazyRow(modifier = Modifier.padding(8.dp).fillMaxWidth()) {
-    items(genres) { item ->
-      SelectableGenreChip(
-          selected = item.name == selectedName?.name,
-          genre = item.name,
-          onclick = { onClick(item) })
+    LazyRow(modifier = Modifier
+        .padding(8.dp)
+        .fillMaxWidth()) {
+        items(genres) { item ->
+            SelectableGenreChip(
+                selected = item.name == selectedName?.name,
+                genre = item.name,
+                onclick = { onClick(item) })
+        }
     }
-  }
 }
 
 @Composable
@@ -77,19 +79,22 @@ fun DisplayMovies(
     navController: NavController,
     genres: List<Genre>?,
 ) {
-  LazyVerticalGrid(
-      columns = GridCells.Fixed(2),
-      modifier =
-          Modifier.padding(horizontal = 5.dp).conditional(genres == null) { padding(top = 8.dp) }) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        modifier =
+            Modifier
+                .padding(horizontal = 5.dp)
+                .conditional(genres == null) { padding(top = 8.dp) }) {
         items(moviesItems) { item ->
-          item?.let {
-            ItemView(
-                item = item,
-                navController = navController,
-                itemIdExtractor = { it.id.toString() },
-                itemImageUrlExtractor = { it.posterPath },
-                itemDetailRoute = Screen.MovieDetail.route)
-          }
+            item?.let {
+                ItemView(
+                    item = item,
+                    navController = navController,
+                    itemIdExtractor = { it.id.toString() },
+                    itemImageUrlExtractor = { it.posterPath },
+                    itemDetailRoute = Screen.MovieDetail.route
+                )
+            }
         }
-      }
+    }
 }

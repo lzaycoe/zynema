@@ -31,33 +31,33 @@ fun TvSeries(
     selectedName: Genre?,
     onclick: (Genre?) -> Unit,
 ) {
-  val activity = LocalActivity.current
-  val progressBar = remember { mutableStateOf(false) }
-  val openDialog = remember { mutableStateOf(false) }
+    val activity = LocalActivity.current
+    val progressBar = remember { mutableStateOf(false) }
+    val openDialog = remember { mutableStateOf(false) }
 
-  // Handling back press for dialog
-  BackHandler(enabled = currentRoute(navController) == Screen.AiringTodayTvSeries.route) {
-    openDialog.value = true
-  }
-
-  Column(modifier = Modifier.background(DefaultBackgroundColor)) {
-    // Display genres if provided
-    genres?.let { DisplayGenres(it, selectedName, onclick) }
-
-    // Show loading indicator if progressBar is true
-    CircularIndeterminateProgressBar(isDisplayed = progressBar.value, 0.4f)
-
-    // Display TV series items using LazyVerticalGrid
-    DisplayTvSeries(tvSeries, navController, genres)
-
-    // Show exit dialog if back button is pressed
-    if (openDialog.value) {
-      ShowExitDialog(activity, openDialog)
+    // Handling back press for dialog
+    BackHandler(enabled = currentRoute(navController) == Screen.AiringTodayTvSeries.route) {
+        openDialog.value = true
     }
-  }
 
-  // Handle loading state for paging
-  tvSeries.pagingLoadingState { progressBar.value = it }
+    Column(modifier = Modifier.background(DefaultBackgroundColor)) {
+        // Display genres if provided
+        genres?.let { DisplayGenres(it, selectedName, onclick) }
+
+        // Show loading indicator if progressBar is true
+        CircularIndeterminateProgressBar(isDisplayed = progressBar.value, 0.4f)
+
+        // Display TV series items using LazyVerticalGrid
+        DisplayTvSeries(tvSeries, navController, genres)
+
+        // Show exit dialog if back button is pressed
+        if (openDialog.value) {
+            ShowExitDialog(activity, openDialog)
+        }
+    }
+
+    // Handle loading state for paging
+    tvSeries.pagingLoadingState { progressBar.value = it }
 }
 
 @Composable
@@ -66,20 +66,22 @@ fun DisplayTvSeries(
     navController: NavController,
     genres: List<Genre>?,
 ) {
-  LazyVerticalGrid(
-      columns = GridCells.Fixed(2),
-      modifier =
-          Modifier.padding(horizontal = 5.dp).conditional(genres == null) { padding(top = 8.dp) }) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        modifier =
+            Modifier
+                .padding(horizontal = 5.dp)
+                .conditional(genres == null) { padding(top = 8.dp) }) {
         items(tvSeriesItems) { item ->
-          item?.let {
-            ItemView(
-                item = it,
-                navController = navController,
-                itemIdExtractor = { it.id.toString() },
-                itemImageUrlExtractor = { it.posterPath },
-                itemDetailRoute = Screen.TvSeriesDetail.route // Correct route for TvSeriesDetail
+            item?.let {
+                ItemView(
+                    item = it,
+                    navController = navController,
+                    itemIdExtractor = { it.id.toString() },
+                    itemImageUrlExtractor = { it.posterPath },
+                    itemDetailRoute = Screen.TvSeriesDetail.route // Correct route for TvSeriesDetail
                 )
-          }
+            }
         }
-      }
+    }
 }

@@ -13,23 +13,23 @@ class ArtistRepository
 constructor(
     private val apiService: ApiService,
 ) : ArtistRepositoryInterface {
-  override suspend fun artistAllMovies(movieId: Int): Flow<DataState<ArtistMovies>> = flow {
-    emit(DataState.Loading)
-    try {
-      val searchResult = apiService.artistAllMovies(movieId)
-      emit(DataState.Success(searchResult))
-    } catch (e: Exception) {
-      emit(DataState.Error(e))
+    override suspend fun artistAllMovies(movieId: Int): Flow<DataState<ArtistMovies>> = flow {
+        emit(DataState.Loading)
+        try {
+            val searchResult = apiService.artistAllMovies(movieId)
+            emit(DataState.Success(searchResult))
+        } catch (e: Exception) {
+            emit(DataState.Error(e))
+        }
     }
-  }
 
-  override suspend fun artistDetail(personId: Int): Flow<DataState<ArtistDetail>> = flow {
-    emit(DataState.Loading)
-    try {
-      val artistDetailResult = apiService.artistDetail(personId)
-      emit(DataState.Success(artistDetailResult))
-    } catch (e: Exception) {
-      emit(DataState.Error(e))
+    override suspend fun artistDetail(personId: Int): Flow<DataState<ArtistDetail>> = flow {
+        emit(DataState.Loading)
+        try {
+            val artistDetailResult = apiService.artistDetail(personId)
+            emit(DataState.Success(artistDetailResult))
+        } catch (e: Exception) {
+            emit(DataState.Error(e))
+        }
     }
-  }
 }

@@ -22,10 +22,11 @@ import kotlinx.coroutines.flow.callbackFlow
  *   [ConnectionState.Unavailable].
  */
 val Context.currentConnectivityState: ConnectionState
-  get() {
-    val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-    return getCurrentConnectivityState(connectivityManager)
-  }
+    get() {
+        val connectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return getCurrentConnectivityState(connectivityManager)
+    }
 
 /**
  * Utility function to check the current connectivity state of the device.
@@ -38,15 +39,15 @@ val Context.currentConnectivityState: ConnectionState
  *   otherwise [ConnectionState.Unavailable].
  */
 private fun getCurrentConnectivityState(connectivityManager: ConnectivityManager): ConnectionState {
-  val network = connectivityManager.activeNetwork
-  val isConnected =
-      network?.let {
-        connectivityManager
-            .getNetworkCapabilities(it)
-            ?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
-      } == true
+    val network = connectivityManager.activeNetwork
+    val isConnected =
+        network?.let {
+            connectivityManager
+                .getNetworkCapabilities(it)
+                ?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
+        } == true
 
-  return if (isConnected) ConnectionState.Available else ConnectionState.Unavailable
+    return if (isConnected) ConnectionState.Available else ConnectionState.Unavailable
 }
 
 /**
@@ -58,21 +59,21 @@ private fun getCurrentConnectivityState(connectivityManager: ConnectivityManager
  * @return A [Flow] that emits the current [ConnectionState] whenever connectivity changes.
  */
 fun Context.observeConnectivityAsFlow() = callbackFlow {
-  val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-  val callback = networkCallback { connectionState -> trySend(connectionState) }
+    val callback = networkCallback { connectionState -> trySend(connectionState) }
 
-  val networkRequest =
-      NetworkRequest.Builder().addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET).build()
+    val networkRequest =
+        NetworkRequest.Builder().addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET).build()
 
-  connectivityManager.registerNetworkCallback(networkRequest, callback)
+    connectivityManager.registerNetworkCallback(networkRequest, callback)
 
-  // Set current state
-  val currentState = getCurrentConnectivityState(connectivityManager)
-  trySend(currentState)
+    // Set current state
+    val currentState = getCurrentConnectivityState(connectivityManager)
+    trySend(currentState)
 
-  // Remove callback when flow collection stops
-  awaitClose { connectivityManager.unregisterNetworkCallback(callback) }
+    // Remove callback when flow collection stops
+    awaitClose { connectivityManager.unregisterNetworkCallback(callback) }
 }
 
 /**
@@ -86,15 +87,15 @@ fun Context.observeConnectivityAsFlow() = callbackFlow {
  *   [ConnectivityManager].
  */
 fun networkCallback(callback: (ConnectionState) -> Unit): ConnectivityManager.NetworkCallback {
-  return object : ConnectivityManager.NetworkCallback() {
-    override fun onAvailable(network: Network) {
-      callback(ConnectionState.Available)
-    }
+    return object : ConnectivityManager.NetworkCallback() {
+        override fun onAvailable(network: Network) {
+            callback(ConnectionState.Available)
+        }
 
-    override fun onLost(network: Network) {
-      callback(ConnectionState.Unavailable)
+        override fun onLost(network: Network) {
+            callback(ConnectionState.Unavailable)
+        }
     }
-  }
 }
 
 /**
@@ -108,11 +109,11 @@ fun networkCallback(callback: (ConnectionState) -> Unit): ConnectivityManager.Ne
  */
 @Composable
 fun connectivityState(): State<ConnectionState> {
-  val context = LocalContext.current
+    val context = LocalContext.current
 
-  // Creates a State<ConnectionState> with the current connectivity state as the initial value
-  return produceState(initialValue = context.currentConnectivityState) {
-    // Collects connectivity updates in a coroutine and updates the State value
-    context.observeConnectivityAsFlow().collect { value = it }
-  }
+    // Creates a State<ConnectionState> with the current connectivity state as the initial value
+    return produceState(initialValue = context.currentConnectivityState) {
+        // Collects connectivity updates in a coroutine and updates the State value
+        context.observeConnectivityAsFlow().collect { value = it }
+    }
 }

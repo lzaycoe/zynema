@@ -1,5 +1,5 @@
 package io.lzaycoe.zynema.ui.screens.tvseries.top_rated
-
+// Quốc Chương
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -13,13 +13,14 @@ fun TopRatedTvSeries(
     navController: NavController,
     genres: List<Genre>? = null,
 ) {
-  val topRatedViewViewModel = hiltViewModel<TopRatedTvSeriesViewModel>()
-  TvSeries(
-      navController = navController,
-      tvSeries = topRatedViewViewModel.topRatedTvSeries.collectAsLazyPagingItems(),
-      genres = genres,
-      selectedName = topRatedViewViewModel.selectedGenre.value) {
+    val topRatedViewViewModel = hiltViewModel<TopRatedTvSeriesViewModel>()
+    TvSeries(
+        navController = navController,
+        tvSeries = topRatedViewViewModel.topRatedTvSeries.collectAsLazyPagingItems(),
+        genres = genres,
+        selectedName = topRatedViewViewModel.selectedGenre.value
+    ) {
         topRatedViewViewModel.filterData.value = GenreId(it?.id.toString())
         it?.let { topRatedViewViewModel.selectedGenre.value = it }
-      }
+    }
 }

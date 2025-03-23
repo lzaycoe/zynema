@@ -1,5 +1,5 @@
 package io.lzaycoe.zynema.ui.screens.tvseries.airing_today
-
+// Quốc Chương
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -13,13 +13,14 @@ fun AiringTodayTvSeries(
     navController: NavController,
     genres: List<Genre>? = null,
 ) {
-  val airingTodayViewModel = hiltViewModel<AiringTodayTvSeriesViewModel>()
-  TvSeries(
-      navController = navController,
-      tvSeries = airingTodayViewModel.airingTodayTvSeries.collectAsLazyPagingItems(),
-      genres = genres,
-      selectedName = airingTodayViewModel.selectedGenre.value) {
+    val airingTodayViewModel = hiltViewModel<AiringTodayTvSeriesViewModel>()
+    TvSeries(
+        navController = navController,
+        tvSeries = airingTodayViewModel.airingTodayTvSeries.collectAsLazyPagingItems(),
+        genres = genres,
+        selectedName = airingTodayViewModel.selectedGenre.value
+    ) {
         airingTodayViewModel.filterData.value = GenreId(it?.id.toString())
         it?.let { airingTodayViewModel.selectedGenre.value = it }
-      }
+    }
 }

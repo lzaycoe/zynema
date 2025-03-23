@@ -1,5 +1,5 @@
 package io.lzaycoe.zynema.ui.screens.favorite.movie
-
+// Mỹ Linh
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -49,19 +49,23 @@ import io.lzaycoe.zynema.ui.theme.cornerRadius
 
 @Composable
 fun FavoriteMovie(navController: NavController) {
-  val viewModel = hiltViewModel<FavoriteMovieViewModel>()
-  val favoriteMovies by viewModel.favoriteMovies.collectAsState()
-  LaunchedEffect(Unit) { viewModel.favoriteMoviesFromDB() }
-  Column(modifier = Modifier.fillMaxWidth().fillMaxHeight()) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(1),
-        modifier = Modifier.padding(start = 5.dp, top = 10.dp, end = 5.dp),
-        content = {
-          items(favoriteMovies) { item ->
-            item?.let { FavoriteMovieItemView(item, navController, viewModel) }
-          }
-        })
-  }
+    val viewModel = hiltViewModel<FavoriteMovieViewModel>()
+    val favoriteMovies by viewModel.favoriteMovies.collectAsState()
+    LaunchedEffect(Unit) { viewModel.favoriteMoviesFromDB() }
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+    ) {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(1),
+            modifier = Modifier.padding(start = 5.dp, top = 10.dp, end = 5.dp),
+            content = {
+                items(favoriteMovies) { item ->
+                    item?.let { FavoriteMovieItemView(item, navController, viewModel) }
+                }
+            })
+    }
 }
 
 @Composable
@@ -70,62 +74,74 @@ fun FavoriteMovieItemView(
     navController: NavController,
     viewModel: FavoriteMovieViewModel,
 ) {
-  val openDialog = remember { mutableStateOf(false) }
-  SideEffect { viewModel.favoriteMoviesFromDB() }
-  Column(
-      modifier =
-          Modifier.padding(start = 5.dp, end = 5.dp, top = 0.dp, bottom = 10.dp).cornerRadius(10)) {
+    val openDialog = remember { mutableStateOf(false) }
+    SideEffect { viewModel.favoriteMoviesFromDB() }
+    Column(
+        modifier =
+            Modifier
+                .padding(start = 5.dp, end = 5.dp, top = 0.dp, bottom = 10.dp)
+                .cornerRadius(10)
+    ) {
         Box {
-          CoilImage(
-              modifier =
-                  Modifier.height(250.dp).clickable {
-                    navController.navigate(Screen.MovieDetail.route.plus("/${item.id}"))
-                  },
-              imageModel = { ApiURL.IMAGE_URL.plus(item.backdropPath) },
-              imageOptions =
-                  ImageOptions(
-                      contentScale = ContentScale.Crop,
-                      alignment = Alignment.Center,
-                      contentDescription = "Movie item",
-                      colorFilter = null,
-                  ),
-              component =
-                  rememberImageComponent {
-                    +CircularRevealPlugin(duration = 800)
-                    +ShimmerPlugin(
-                        shimmer =
-                            Shimmer.Flash(
-                                baseColor = SecondaryFontColor,
-                                highlightColor = DefaultBackgroundColor))
-                  },
-          )
-          IconButton(
-              onClick = { openDialog.value = true },
-              modifier =
-                  Modifier.align(Alignment.TopEnd)
-                      .padding(8.dp)
-                      .background(Color.White.copy(alpha = 0.9f), shape = CircleShape)) {
+            CoilImage(
+                modifier =
+                    Modifier
+                        .height(250.dp)
+                        .clickable {
+                            navController.navigate(Screen.MovieDetail.route.plus("/${item.id}"))
+                        },
+                imageModel = { ApiURL.IMAGE_URL.plus(item.backdropPath) },
+                imageOptions =
+                    ImageOptions(
+                        contentScale = ContentScale.Crop,
+                        alignment = Alignment.Center,
+                        contentDescription = "Movie item",
+                        colorFilter = null,
+                    ),
+                component =
+                    rememberImageComponent {
+                        +CircularRevealPlugin(duration = 800)
+                        +ShimmerPlugin(
+                            shimmer =
+                                Shimmer.Flash(
+                                    baseColor = SecondaryFontColor,
+                                    highlightColor = DefaultBackgroundColor
+                                )
+                        )
+                    },
+            )
+            IconButton(
+                onClick = { openDialog.value = true },
+                modifier =
+                    Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(8.dp)
+                        .background(Color.White.copy(alpha = 0.9f), shape = CircleShape)
+            ) {
                 Icon(
                     imageVector = Icons.Default.Delete,
                     contentDescription = "Delete",
-                    tint = Color.Gray)
-              }
-          Box(
-              Modifier.fillMaxWidth()
-                  .align(Alignment.BottomStart)
-                  .background(Color.Gray.copy(alpha = 0.5f))) {
+                    tint = Color.Gray
+                )
+            }
+            Box(
+                Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomStart)
+                    .background(Color.Gray.copy(alpha = 0.5f))
+            ) {
                 Text(text = item.title, color = Color.White, modifier = Modifier.padding(8.dp))
-              }
+            }
         }
         if (openDialog.value) {
-          ExitAlertDialog(
-              title = stringResource(R.string.remove_from_favorite),
-              description = stringResource(R.string.do_you_wanna_remove_this_from_favorite),
-              onConfirm = {
-                viewModel.removeMovieFromDB(item.id)
-                openDialog.value = false
-              },
-              onDismiss = { openDialog.value = false })
+            ExitAlertDialog(
+                title = stringResource(R.string.remove_from_favorite),
+                description = stringResource(R.string.do_you_wanna_remove_this_from_favorite),
+                onConfirm = {
+                    viewModel.removeMovieFromDB(item.id)
+                    openDialog.value = false
+                },
+                onDismiss = { openDialog.value = false })
         }
-      }
+    }
 }

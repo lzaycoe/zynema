@@ -9,11 +9,11 @@ class LocalTvSeriesRepository
 constructor(
     private val tvSeriesDao: FavoriteTvSeriesDao,
 ) : LocalTvSeriesRepositoryInterface {
-  override suspend fun favoriteTvSeries(): List<TvSeriesDetail?> {
-    return tvSeriesDao.getAllTvSeriesDetails()
-  }
+    override suspend fun favoriteTvSeries(): List<TvSeriesDetail?> {
+        return tvSeriesDao.getAllTvSeriesDetails()
+    }
 
-  override suspend fun removeTvSeriesById(tvSeriesId: Int) {
-    tvSeriesDao.deleteTvSeriesById(tvSeriesId)
-  }
+    override suspend fun removeTvSeriesById(tvSeriesId: Int) {
+        tvSeriesDao.deleteTvSeriesById(tvSeriesId)
+    }
 }

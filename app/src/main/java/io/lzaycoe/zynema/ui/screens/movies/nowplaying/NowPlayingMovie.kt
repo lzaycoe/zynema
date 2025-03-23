@@ -1,5 +1,5 @@
 package io.lzaycoe.zynema.ui.screens.movies.nowplaying
-
+// Trọng Nghĩa
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -13,13 +13,14 @@ fun NowPlayingMovie(
     navController: NavController,
     genres: List<Genre>? = null,
 ) {
-  val nowPlayViewModel = hiltViewModel<NowPlayingMovieViewModel>()
-  Movies(
-      navController = navController,
-      moviesItems = nowPlayViewModel.nowPlayingMovies.collectAsLazyPagingItems(),
-      genres = genres,
-      selectedName = nowPlayViewModel.selectedGenre.value) {
+    val nowPlayViewModel = hiltViewModel<NowPlayingMovieViewModel>()
+    Movies(
+        navController = navController,
+        moviesItems = nowPlayViewModel.nowPlayingMovies.collectAsLazyPagingItems(),
+        genres = genres,
+        selectedName = nowPlayViewModel.selectedGenre.value
+    ) {
         nowPlayViewModel.filterData.value = GenreId(it?.id.toString())
         it?.let { nowPlayViewModel.selectedGenre.value = it }
-      }
+    }
 }

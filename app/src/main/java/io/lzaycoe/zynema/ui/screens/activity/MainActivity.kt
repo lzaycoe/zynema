@@ -7,15 +7,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import dagger.hilt.android.AndroidEntryPoint
 import io.lzaycoe.zynema.ui.screens.mainscreen.MainScreen
-import io.lzaycoe.zynema.ui.theme.HiltMVVMComposeMovieTheme
+import io.lzaycoe.zynema.ui.theme.ZynemaTheme
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-  private val splashViewModel: MainActivityViewModel by viewModels()
+    private val splashViewModel: MainActivityViewModel by viewModels()
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    installSplashScreen().apply { setKeepOnScreenCondition { splashViewModel.isLoading.value } }
-    setContent { HiltMVVMComposeMovieTheme { MainScreen() } }
-  }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        installSplashScreen().apply { setKeepOnScreenCondition { splashViewModel.isLoading.value } }
+        setContent { ZynemaTheme { MainScreen() } }
+    }
 }
