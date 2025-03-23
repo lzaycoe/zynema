@@ -10,8 +10,9 @@ import io.lzaycoe.zynema.ui.component.Celebrities
 fun PopularCelebrities(
     navController: NavController,
 ) {
-  val popularCelebritiesViewModel = hiltViewModel<PopularCelebritiesViewModel>()
-  Celebrities(
-      navController = navController,
-      celebrities = popularCelebritiesViewModel.popularCelebrities.collectAsLazyPagingItems())
+    val popularCelebritiesViewModel = hiltViewModel<PopularCelebritiesViewModel>()
+    Celebrities(
+        navController = navController,
+        celebrities = popularCelebritiesViewModel.popularCelebrities.collectAsLazyPagingItems()
+    )
 }
