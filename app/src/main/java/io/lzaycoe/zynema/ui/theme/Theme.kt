@@ -11,20 +11,22 @@ private val DarkColorPalette =
 
 private val LightColorPalette =
     lightColorScheme(
-        primaryContainer = Purple500, primary = Purple700, secondary = Teal200
-
-        /* Other default colors to override
-        background = Color.White,
-        surface = Color.White,
-        onPrimary = Color.White,
-        onSecondary = Color.Black,
-        onBackground = Color.Black,
-        onSurface = Color.Black,
-        */
+        primary = Purple500,
+        primaryContainer = Purple200,
+        secondary = Pink500,
+        secondaryContainer = Pink200,
+        background = White,
+        surface = Grey200,
+        onPrimary = White,
+        onSecondary = Black,
+        onBackground = Black,
+        onSurface = Black,
+        error = Red200,
+        onError = White
     )
 
 @Composable
-fun HiltMVVMComposeMovieTheme(
+fun ZynemaTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable() () -> Unit
 ) {
