@@ -13,13 +13,14 @@ fun OnTheAirTvSeries(
     navController: NavController,
     genres: List<Genre>? = null,
 ) {
-  val onTheAirViewViewModel = hiltViewModel<OnTheAirTvSeriesViewModel>()
-  TvSeries(
-      navController = navController,
-      tvSeries = onTheAirViewViewModel.onTheAirTvSeries.collectAsLazyPagingItems(),
-      genres = genres,
-      selectedName = onTheAirViewViewModel.selectedGenre.value) {
+    val onTheAirViewViewModel = hiltViewModel<OnTheAirTvSeriesViewModel>()
+    TvSeries(
+        navController = navController,
+        tvSeries = onTheAirViewViewModel.onTheAirTvSeries.collectAsLazyPagingItems(),
+        genres = genres,
+        selectedName = onTheAirViewViewModel.selectedGenre.value
+    ) {
         onTheAirViewViewModel.filterData.value = GenreId(it?.id.toString())
         it?.let { onTheAirViewViewModel.selectedGenre.value = it }
-      }
+    }
 }

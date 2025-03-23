@@ -13,13 +13,14 @@ fun PopularTvSeries(
     navController: NavController,
     genres: List<Genre>? = null,
 ) {
-  val popularViewViewModel = hiltViewModel<PopularTvSeriesViewModel>()
-  TvSeries(
-      navController = navController,
-      tvSeries = popularViewViewModel.popularTvSeries.collectAsLazyPagingItems(),
-      genres = genres,
-      selectedName = popularViewViewModel.selectedGenre.value) {
+    val popularViewViewModel = hiltViewModel<PopularTvSeriesViewModel>()
+    TvSeries(
+        navController = navController,
+        tvSeries = popularViewViewModel.popularTvSeries.collectAsLazyPagingItems(),
+        genres = genres,
+        selectedName = popularViewViewModel.selectedGenre.value
+    ) {
         popularViewViewModel.filterData.value = GenreId(it?.id.toString())
         it?.let { popularViewViewModel.selectedGenre.value = it }
-      }
+    }
 }
