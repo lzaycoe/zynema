@@ -53,9 +53,11 @@ fun FavoriteTvSeries(navController: NavController) {
     val favoriteTvSeries by viewModel.favoriteTvSeries.collectAsState()
 
     LaunchedEffect(Unit) { viewModel.favoriteTvSeriesFromDB() }
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .fillMaxHeight()) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+    ) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(1),
             modifier = Modifier.padding(start = 5.dp, top = 10.dp, end = 5.dp),

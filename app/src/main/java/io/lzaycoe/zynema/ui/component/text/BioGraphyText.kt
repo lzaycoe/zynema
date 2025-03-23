@@ -7,5 +7,5 @@ import io.lzaycoe.zynema.ui.theme.bioGrapyText
 
 @Composable
 fun BioGraphyText(text: String) {
-  Text(text = text, style = MaterialTheme.typography.bioGrapyText)
+    Text(text = text, style = MaterialTheme.typography.bioGrapyText)
 }

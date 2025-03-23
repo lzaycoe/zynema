@@ -17,29 +17,29 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DataBaseModule {
-  @Provides
-  @Singleton
-  fun provideMovieDatabase(@ApplicationContext context: Context): MovieDatabase {
-    return Room.databaseBuilder(context, MovieDatabase::class.java, "movieWorld.db").build()
-  }
+    @Provides
+    @Singleton
+    fun provideMovieDatabase(@ApplicationContext context: Context): MovieDatabase {
+        return Room.databaseBuilder(context, MovieDatabase::class.java, "movieWorld.db").build()
+    }
 
-  @Singleton
-  @Provides
-  fun provideMovieDetailDao(moviesDatabase: MovieDatabase): FavoriteMovieDao =
-      moviesDatabase.getFavoriteMovieDetailDao()
+    @Singleton
+    @Provides
+    fun provideMovieDetailDao(moviesDatabase: MovieDatabase): FavoriteMovieDao =
+        moviesDatabase.getFavoriteMovieDetailDao()
 
-  @Singleton
-  @Provides
-  fun provideLocalMovieRepo(movieDao: FavoriteMovieDao): LocalMovieRepository =
-      LocalMovieRepository(movieDao)
+    @Singleton
+    @Provides
+    fun provideLocalMovieRepo(movieDao: FavoriteMovieDao): LocalMovieRepository =
+        LocalMovieRepository(movieDao)
 
-  @Singleton
-  @Provides
-  fun provideTvSeriesDao(moviesDatabase: MovieDatabase): FavoriteTvSeriesDao =
-      moviesDatabase.getFavoriteTvSeriesDao()
+    @Singleton
+    @Provides
+    fun provideTvSeriesDao(moviesDatabase: MovieDatabase): FavoriteTvSeriesDao =
+        moviesDatabase.getFavoriteTvSeriesDao()
 
-  @Singleton
-  @Provides
-  fun provideLocalTvSeriesRepo(tvSeriesDao: FavoriteTvSeriesDao): LocalTvSeriesRepository =
-      LocalTvSeriesRepository(tvSeriesDao)
+    @Singleton
+    @Provides
+    fun provideLocalTvSeriesRepo(tvSeriesDao: FavoriteTvSeriesDao): LocalTvSeriesRepository =
+        LocalTvSeriesRepository(tvSeriesDao)
 }

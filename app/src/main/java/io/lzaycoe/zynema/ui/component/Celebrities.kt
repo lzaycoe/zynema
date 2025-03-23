@@ -44,30 +44,30 @@ fun Celebrities(
     navController: NavController,
     celebrities: LazyPagingItems<Celebrity>,
 ) {
-  val activity = LocalActivity.current
-  val progressBar = remember { mutableStateOf(false) }
-  val openDialog = remember { mutableStateOf(false) }
+    val activity = LocalActivity.current
+    val progressBar = remember { mutableStateOf(false) }
+    val openDialog = remember { mutableStateOf(false) }
 
-  // Handling back press for dialog
-  BackHandler(enabled = currentRoute(navController) == Screen.AiringTodayTvSeries.route) {
-    openDialog.value = true
-  }
-
-  Column(modifier = Modifier.background(DefaultBackgroundColor)) {
-    // Display genres if provided
-
-    // Show loading indicator if progressBar is true
-    CircularIndeterminateProgressBar(isDisplayed = progressBar.value, 0.4f)
-
-    DisplayCelebrities(celebrities = celebrities, navController = navController)
-    // Show exit dialog if back button is pressed
-    if (openDialog.value) {
-      ShowExitDialog(activity, openDialog)
+    // Handling back press for dialog
+    BackHandler(enabled = currentRoute(navController) == Screen.AiringTodayTvSeries.route) {
+        openDialog.value = true
     }
-  }
 
-  // Handle loading state for paging
-  celebrities.pagingLoadingState { progressBar.value = it }
+    Column(modifier = Modifier.background(DefaultBackgroundColor)) {
+        // Display genres if provided
+
+        // Show loading indicator if progressBar is true
+        CircularIndeterminateProgressBar(isDisplayed = progressBar.value, 0.4f)
+
+        DisplayCelebrities(celebrities = celebrities, navController = navController)
+        // Show exit dialog if back button is pressed
+        if (openDialog.value) {
+            ShowExitDialog(activity, openDialog)
+        }
+    }
+
+    // Handle loading state for paging
+    celebrities.pagingLoadingState { progressBar.value = it }
 }
 
 @Composable
@@ -75,39 +75,52 @@ fun DisplayCelebrities(
     celebrities: LazyPagingItems<Celebrity>,
     navController: NavController,
 ) {
-  LazyVerticalGrid(columns = GridCells.Fixed(2), modifier = Modifier.padding(horizontal = 5.dp)) {
-    items(celebrities) { item ->
-      item?.let {
-        Column(modifier = Modifier.padding(5.dp)) {
-          CoilImage(
-              modifier =
-                  Modifier.size(230.dp).cornerRadius(10).clickable {
-                    navController.navigate(Screen.ArtistDetail.route.plus("/${item.id}"))
-                  },
-              imageModel = { ApiURL.IMAGE_URL + item.profilePath },
-              imageOptions =
-                  ImageOptions(
-                      contentScale = ContentScale.Crop,
-                      alignment = Alignment.Center,
-                      contentDescription = "Item"),
-              component =
-                  rememberImageComponent {
-                    +CircularRevealPlugin(duration = 800)
-                    +ShimmerPlugin(
-                        shimmer =
-                            Shimmer.Flash(
-                                baseColor = SecondaryFontColor,
-                                highlightColor = DefaultBackgroundColor))
-                  })
-          Column(Modifier.padding(start = 4.dp, end = 4.dp, top = 4.dp)) {
-            Text(text = item.name, fontWeight = FontWeight.Bold, fontSize = 18.sp)
-            Text(
-                text = "Popularity: ${String.format(Locale.US, "%.1f", item.popularity)}",
-                fontSize = 14.sp,
-                color = Color.Gray)
-          }
+    LazyVerticalGrid(columns = GridCells.Fixed(2), modifier = Modifier.padding(horizontal = 5.dp)) {
+        items(celebrities) { item ->
+            item?.let {
+                Column(modifier = Modifier.padding(5.dp)) {
+                    CoilImage(
+                        modifier =
+                            Modifier
+                                .size(230.dp)
+                                .cornerRadius(10)
+                                .clickable {
+                                    navController.navigate(Screen.ArtistDetail.route.plus("/${item.id}"))
+                                },
+                        imageModel = { ApiURL.IMAGE_URL + item.profilePath },
+                        imageOptions =
+                            ImageOptions(
+                                contentScale = ContentScale.Crop,
+                                alignment = Alignment.Center,
+                                contentDescription = "Item"
+                            ),
+                        component =
+                            rememberImageComponent {
+                                +CircularRevealPlugin(duration = 800)
+                                +ShimmerPlugin(
+                                    shimmer =
+                                        Shimmer.Flash(
+                                            baseColor = SecondaryFontColor,
+                                            highlightColor = DefaultBackgroundColor
+                                        )
+                                )
+                            })
+                    Column(Modifier.padding(start = 4.dp, end = 4.dp, top = 4.dp)) {
+                        Text(text = item.name, fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                        Text(
+                            text = "Popularity: ${
+                                String.format(
+                                    Locale.US,
+                                    "%.1f",
+                                    item.popularity
+                                )
+                            }",
+                            fontSize = 14.sp,
+                            color = Color.Gray
+                        )
+                    }
+                }
+            }
         }
-      }
     }
-  }
 }

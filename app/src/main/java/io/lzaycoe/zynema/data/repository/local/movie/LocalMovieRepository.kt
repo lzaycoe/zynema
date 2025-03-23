@@ -10,11 +10,11 @@ constructor(
     private val movieDao: FavoriteMovieDao,
 ) : LocalMovieRepositoryInterface {
 
-  override suspend fun favoriteMovies(): List<MovieDetail?> {
-    return movieDao.getAllMovieDetails()
-  }
+    override suspend fun favoriteMovies(): List<MovieDetail?> {
+        return movieDao.getAllMovieDetails()
+    }
 
-  override suspend fun removeMovieById(movieId: Int) {
-    movieDao.deleteMovieDetailById(movieId)
-  }
+    override suspend fun removeMovieById(movieId: Int) {
+        movieDao.deleteMovieDetailById(movieId)
+    }
 }

@@ -20,37 +20,39 @@ fun ExitAlertDialog(
     onConfirm: () -> Unit,
     onDismiss: (isOpen: Boolean) -> Unit,
 ) {
-  val openDialog = remember { mutableStateOf(true) }
-  if (openDialog.value) {
-    AlertDialog(
-        onDismissRequest = {},
-        // below line is use to display title of our dialog
-        title = { Text(text = title, fontWeight = FontWeight.Bold, fontSize = 18.sp) },
-        text = { Text(text = description, fontSize = 16.sp) },
-        confirmButton = {
-          TextButton(
-              onClick = {
-                openDialog.value = false
-                onConfirm()
-              }) {
-                Text(
-                    stringResource(R.string.yes),
-                    fontWeight = FontWeight.Bold,
-                    style = TextStyle(color = Color.Black))
-              }
-        },
-        dismissButton = {
-          TextButton(
-              onClick = {
-                openDialog.value = false
-                onDismiss(false)
-              }) {
-                Text(
-                    stringResource(R.string.no),
-                    fontWeight = FontWeight.Bold,
-                    style = TextStyle(color = Color.Black))
-              }
-        },
-    )
-  }
+    val openDialog = remember { mutableStateOf(true) }
+    if (openDialog.value) {
+        AlertDialog(
+            onDismissRequest = {},
+            // below line is use to display title of our dialog
+            title = { Text(text = title, fontWeight = FontWeight.Bold, fontSize = 18.sp) },
+            text = { Text(text = description, fontSize = 16.sp) },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        openDialog.value = false
+                        onConfirm()
+                    }) {
+                    Text(
+                        stringResource(R.string.yes),
+                        fontWeight = FontWeight.Bold,
+                        style = TextStyle(color = Color.Black)
+                    )
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = {
+                        openDialog.value = false
+                        onDismiss(false)
+                    }) {
+                    Text(
+                        stringResource(R.string.no),
+                        fontWeight = FontWeight.Bold,
+                        style = TextStyle(color = Color.Black)
+                    )
+                }
+            },
+        )
+    }
 }

@@ -11,11 +11,11 @@ import io.lzaycoe.zynema.ui.theme.HiltMVVMComposeMovieTheme
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-  private val splashViewModel: MainActivityViewModel by viewModels()
+    private val splashViewModel: MainActivityViewModel by viewModels()
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    installSplashScreen().apply { setKeepOnScreenCondition { splashViewModel.isLoading.value } }
-    setContent { HiltMVVMComposeMovieTheme { MainScreen() } }
-  }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        installSplashScreen().apply { setKeepOnScreenCondition { splashViewModel.isLoading.value } }
+        setContent { HiltMVVMComposeMovieTheme { MainScreen() } }
+    }
 }

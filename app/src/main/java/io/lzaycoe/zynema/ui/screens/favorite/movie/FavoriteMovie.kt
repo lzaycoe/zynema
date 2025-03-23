@@ -52,9 +52,11 @@ fun FavoriteMovie(navController: NavController) {
     val viewModel = hiltViewModel<FavoriteMovieViewModel>()
     val favoriteMovies by viewModel.favoriteMovies.collectAsState()
     LaunchedEffect(Unit) { viewModel.favoriteMoviesFromDB() }
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .fillMaxHeight()) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+    ) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(1),
             modifier = Modifier.padding(start = 5.dp, top = 10.dp, end = 5.dp),

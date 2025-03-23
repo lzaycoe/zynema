@@ -98,15 +98,19 @@ fun MovieDetailContent(
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
     val calculatedOffset = screenHeight / 5.5f
     val movie = uiState.movieDetail
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .background(DefaultBackgroundColor)) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(DefaultBackgroundColor)
+    ) {
         CircularIndeterminateProgressBar(isDisplayed = uiState.isLoading, 0.4f)
         movie?.let { it ->
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                Box(modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(16f / 9f)) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(16f / 9f)
+                ) {
                     CoilImage(
                         modifier =
                             Modifier

@@ -21,19 +21,19 @@ private val LightColorPalette =
         onBackground = Color.Black,
         onSurface = Color.Black,
         */
-        )
+    )
 
 @Composable
 fun HiltMVVMComposeMovieTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable() () -> Unit
 ) {
-  val colors =
-      if (darkTheme) {
-        DarkColorPalette
-      } else {
-        LightColorPalette
-      }
+    val colors =
+        if (darkTheme) {
+            DarkColorPalette
+        } else {
+            LightColorPalette
+        }
 
-  MaterialTheme(colorScheme = colors, typography = Typography, shapes = Shapes, content = content)
+    MaterialTheme(colorScheme = colors, typography = Typography, shapes = Shapes, content = content)
 }

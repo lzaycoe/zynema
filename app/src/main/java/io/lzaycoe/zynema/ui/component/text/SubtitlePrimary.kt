@@ -7,5 +7,5 @@ import io.lzaycoe.zynema.ui.theme.subTitlePrimary
 
 @Composable
 fun SubtitlePrimary(text: String) {
-  Text(text = text, style = MaterialTheme.typography.subTitlePrimary)
+    Text(text = text, style = MaterialTheme.typography.subTitlePrimary)
 }

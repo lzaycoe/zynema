@@ -10,23 +10,23 @@ import io.lzaycoe.zynema.utils.network.DataState
 import kotlinx.coroutines.flow.Flow
 
 interface MovieRepositoryInterface {
-  suspend fun movieDetail(movieId: Int): Flow<DataState<MovieDetail>>
+    suspend fun movieDetail(movieId: Int): Flow<DataState<MovieDetail>>
 
-  suspend fun recommendedMovie(movieId: Int): Flow<DataState<List<MovieItem>>>
+    suspend fun recommendedMovie(movieId: Int): Flow<DataState<List<MovieItem>>>
 
-  suspend fun movieSearch(searchKey: String): Flow<DataState<SearchBaseModel>>
+    suspend fun movieSearch(searchKey: String): Flow<DataState<SearchBaseModel>>
 
-  suspend fun genreList(): Flow<DataState<Genres>>
+    suspend fun genreList(): Flow<DataState<Genres>>
 
-  suspend fun movieCredit(movieId: Int): Flow<DataState<Artist>>
+    suspend fun movieCredit(movieId: Int): Flow<DataState<Artist>>
 
-  fun nowPlayingMoviePagingDataSource(genreId: String?): Flow<PagingData<MovieItem>>
+    fun nowPlayingMoviePagingDataSource(genreId: String?): Flow<PagingData<MovieItem>>
 
-  fun popularMoviePagingDataSource(genreId: String?): Flow<PagingData<MovieItem>>
+    fun popularMoviePagingDataSource(genreId: String?): Flow<PagingData<MovieItem>>
 
-  fun topRatedMoviePagingDataSource(genreId: String?): Flow<PagingData<MovieItem>>
+    fun topRatedMoviePagingDataSource(genreId: String?): Flow<PagingData<MovieItem>>
 
-  fun upcomingMoviePagingDataSource(genreId: String?): Flow<PagingData<MovieItem>>
+    fun upcomingMoviePagingDataSource(genreId: String?): Flow<PagingData<MovieItem>>
 
-  fun genrePagingDataSource(genreId: String): Flow<PagingData<MovieItem>>
+    fun genrePagingDataSource(genreId: String): Flow<PagingData<MovieItem>>
 }

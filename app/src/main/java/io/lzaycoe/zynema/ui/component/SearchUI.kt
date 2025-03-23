@@ -48,29 +48,36 @@ fun SearchUI(
     activeTab: Int,
     itemClick: () -> Unit,
 ) {
-  LazyColumn(
-      modifier =
-          Modifier.padding(top = 8.dp)
-              .fillMaxWidth()
-              .heightIn(0.dp, 350.dp) // define max height
-              .clip(RoundedCornerShape(bottomStart = 15.dp, bottomEnd = 15.dp))
-              .background(color = DefaultBackgroundColor)
-              .padding(top = 8.dp)) {
+    LazyColumn(
+        modifier =
+            Modifier
+                .padding(top = 8.dp)
+                .fillMaxWidth()
+                .heightIn(0.dp, 350.dp) // define max height
+                .clip(RoundedCornerShape(bottomStart = 15.dp, bottomEnd = 15.dp))
+                .background(color = DefaultBackgroundColor)
+                .padding(top = 8.dp)
+    ) {
         items(
             items = searchData,
             itemContent = { item ->
-              Row(
-                  modifier =
-                      Modifier.padding(bottom = 8.dp, start = 8.dp, end = 8.dp).clickable {
-                        itemClick.invoke()
-                        if (activeTab == ACTIVE_MOVIE_TAB) {
-                          navController.navigate(Screen.MovieDetail.route.plus("/${item.id}"))
-                        } else if (activeTab == ACTIVE_TV_SERIES_TAB) {
-                          navController.navigate(Screen.TvSeriesDetail.route.plus("/${item.id}"))
-                        }
-                      }) {
+                Row(
+                    modifier =
+                        Modifier
+                            .padding(bottom = 8.dp, start = 8.dp, end = 8.dp)
+                            .clickable {
+                                itemClick.invoke()
+                                if (activeTab == ACTIVE_MOVIE_TAB) {
+                                    navController.navigate(Screen.MovieDetail.route.plus("/${item.id}"))
+                                } else if (activeTab == ACTIVE_TV_SERIES_TAB) {
+                                    navController.navigate(Screen.TvSeriesDetail.route.plus("/${item.id}"))
+                                }
+                            }) {
                     CoilImage(
-                        modifier = Modifier.height(100.dp).width(80.dp).cornerRadius(8),
+                        modifier = Modifier
+                            .height(100.dp)
+                            .width(80.dp)
+                            .cornerRadius(8),
                         imageModel = { ApiURL.IMAGE_URL.plus(item.backdropPath) },
                         imageOptions =
                             ImageOptions(
@@ -81,39 +88,44 @@ fun SearchUI(
                             ),
                         component =
                             rememberImageComponent {
-                              +CircularRevealPlugin(duration = 800)
-                              +ShimmerPlugin(
-                                  shimmer =
-                                      Shimmer.Flash(
-                                          baseColor = SecondaryFontColor,
-                                          highlightColor = DefaultBackgroundColor))
+                                +CircularRevealPlugin(duration = 800)
+                                +ShimmerPlugin(
+                                    shimmer =
+                                        Shimmer.Flash(
+                                            baseColor = SecondaryFontColor,
+                                            highlightColor = DefaultBackgroundColor
+                                        )
+                                )
                             },
                     )
                     Column {
-                      val title = if (activeTab == ACTIVE_MOVIE_TAB) item.title else item.name
-                      val release =
-                          if (activeTab == ACTIVE_MOVIE_TAB) item.releaseDate else item.firstAirDate
-                      Text(
-                          text = title ?: "",
-                          modifier = Modifier.padding(start = 8.dp, top = 4.dp),
-                          fontWeight = FontWeight.SemiBold)
-                      Text(
-                          text = release ?: "",
-                          color = FontColor,
-                          fontSize = 16.sp,
-                          modifier = Modifier.padding(start = 8.dp))
-                      Text(
-                          text =
-                              "${stringResource(R.string.rating_search)} ${
-                            item.voteAverage?.roundTo(
-                                1
-                            )
-                        }",
-                          color = SecondaryFontColor,
-                          fontSize = 12.sp,
-                          modifier = Modifier.padding(start = 8.dp))
+                        val title = if (activeTab == ACTIVE_MOVIE_TAB) item.title else item.name
+                        val release =
+                            if (activeTab == ACTIVE_MOVIE_TAB) item.releaseDate else item.firstAirDate
+                        Text(
+                            text = title ?: "",
+                            modifier = Modifier.padding(start = 8.dp, top = 4.dp),
+                            fontWeight = FontWeight.SemiBold
+                        )
+                        Text(
+                            text = release ?: "",
+                            color = FontColor,
+                            fontSize = 16.sp,
+                            modifier = Modifier.padding(start = 8.dp)
+                        )
+                        Text(
+                            text =
+                                "${stringResource(R.string.rating_search)} ${
+                                    item.voteAverage?.roundTo(
+                                        1
+                                    )
+                                }",
+                            color = SecondaryFontColor,
+                            fontSize = 12.sp,
+                            modifier = Modifier.padding(start = 8.dp)
+                        )
                     }
-                  }
+                }
             })
-      }
+    }
 }

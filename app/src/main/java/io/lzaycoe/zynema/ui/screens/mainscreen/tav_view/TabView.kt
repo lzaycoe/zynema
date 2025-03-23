@@ -78,9 +78,11 @@ fun TabView(
 fun FavoriteTabView(navigator: NavHostController) {
     var selectedTabIndex by remember { mutableIntStateOf(0) }
     val tabs = listOf(stringResource(R.string.movie), stringResource(R.string.tv_series))
-    Column(Modifier
-        .fillMaxWidth()
-        .background(Color.Gray)) {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .background(Color.Gray)
+    ) {
         TabRow(
             modifier = Modifier.background(Color.White),
             selectedTabIndex = selectedTabIndex,

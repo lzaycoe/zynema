@@ -32,42 +32,51 @@ import kotlinx.coroutines.FlowPreview
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 @Composable
 fun SearchBar(isAppBarVisible: MutableState<Boolean>, viewModel: MainViewModel, activeTab: Int) {
-  var text by remember { mutableStateOf("") }
-  val focusRequester = FocusRequester()
-  BackHandler(isAppBarVisible.value.not()) { isAppBarVisible.value = true }
-  Column {
-    TextField(
-        modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
-        value = text,
-        colors =
-            TextFieldDefaults.colors(
-                cursorColor = Color.Black,
-                disabledLabelColor = Blue,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent),
-        onValueChange = {
-          text = it
-          if (activeTab == 0) {
-            viewModel.searchMovies(it)
-          } else {
-            viewModel.searchTvSeries(it)
-          }
-        },
-        // shape = RoundedCornerShape(8.dp),
-        singleLine = true,
-        trailingIcon = {
-          if (text.trim().isNotEmpty()) {
-            Icon(
-                Icons.Filled.Clear,
-                contentDescription = "clear text",
-                modifier = Modifier.padding(end = 16.dp).offset(x = 10.dp).clickable { text = "" })
-          } else {
-            Icon(
-                Icons.Filled.Search,
-                contentDescription = "search",
-                modifier = Modifier.padding(end = 16.dp).offset(x = 10.dp).clickable {})
-          }
-        })
-    LaunchedEffect(Unit) { focusRequester.requestFocus() }
-  }
+    var text by remember { mutableStateOf("") }
+    val focusRequester = FocusRequester()
+    BackHandler(isAppBarVisible.value.not()) { isAppBarVisible.value = true }
+    Column {
+        TextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .focusRequester(focusRequester),
+            value = text,
+            colors =
+                TextFieldDefaults.colors(
+                    cursorColor = Color.Black,
+                    disabledLabelColor = Blue,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent
+                ),
+            onValueChange = {
+                text = it
+                if (activeTab == 0) {
+                    viewModel.searchMovies(it)
+                } else {
+                    viewModel.searchTvSeries(it)
+                }
+            },
+            // shape = RoundedCornerShape(8.dp),
+            singleLine = true,
+            trailingIcon = {
+                if (text.trim().isNotEmpty()) {
+                    Icon(
+                        Icons.Filled.Clear,
+                        contentDescription = "clear text",
+                        modifier = Modifier
+                            .padding(end = 16.dp)
+                            .offset(x = 10.dp)
+                            .clickable { text = "" })
+                } else {
+                    Icon(
+                        Icons.Filled.Search,
+                        contentDescription = "search",
+                        modifier = Modifier
+                            .padding(end = 16.dp)
+                            .offset(x = 10.dp)
+                            .clickable {})
+                }
+            })
+        LaunchedEffect(Unit) { focusRequester.requestFocus() }
+    }
 }
