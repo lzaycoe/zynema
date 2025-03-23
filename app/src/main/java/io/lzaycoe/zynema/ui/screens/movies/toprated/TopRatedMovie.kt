@@ -13,13 +13,14 @@ fun TopRatedMovie(
     navController: NavController,
     genres: List<Genre>? = null,
 ) {
-  val topRatedViewModel = hiltViewModel<TopRatedMovieViewModel>()
-  Movies(
-      navController = navController,
-      moviesItems = topRatedViewModel.topRatedMovies.collectAsLazyPagingItems(),
-      genres = genres,
-      selectedName = topRatedViewModel.selectedGenre.value) {
+    val topRatedViewModel = hiltViewModel<TopRatedMovieViewModel>()
+    Movies(
+        navController = navController,
+        moviesItems = topRatedViewModel.topRatedMovies.collectAsLazyPagingItems(),
+        genres = genres,
+        selectedName = topRatedViewModel.selectedGenre.value
+    ) {
         topRatedViewModel.filterData.value = GenreId(it?.id.toString())
         it?.let { topRatedViewModel.selectedGenre.value = it }
-      }
+    }
 }
