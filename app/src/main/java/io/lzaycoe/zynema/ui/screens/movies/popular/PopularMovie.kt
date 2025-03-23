@@ -1,5 +1,5 @@
 package io.lzaycoe.zynema.ui.screens.movies.popular
-
+// Trọng Nghĩa
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
